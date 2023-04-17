@@ -19,7 +19,7 @@ const getUserDetails = catchAsync(async (req, res, next) => {
 const updateUserDetails = catchAsync(async (req, res, next) => {
   const { firebaseUid } = req;
   const data = req.body;
-  const updateUserDetails = await UserService.updateUserDetails(
+  const updateUser = await UserService.updateUserDetails(
     firebaseUid,
     data
   );
@@ -28,7 +28,7 @@ const updateUserDetails = catchAsync(async (req, res, next) => {
     code: httpStatus.FOUND,
     status: httpStatus[httpStatus.OK],
     message: "Successfully updated the details of the user",
-    data: null,
+    data: updateUser,
   });
 });
 

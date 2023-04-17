@@ -6,8 +6,8 @@ const EventService = require("../services/event.services");
 const getAllEvents = catchAsync(async (req, res, next) => {
   const allEvents = await EventService.getAllEvents();
 
-  return res.status(httpStatus.FOUND).json({
-    code: httpStatus.FOUND,
+  return res.status(httpStatus.OK).json({
+    code: httpStatus.OK,
     status: httpStatus[httpStatus.OK],
     message: "Successfully fetched all the event details",
     data: allEvents,

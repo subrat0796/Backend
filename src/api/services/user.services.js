@@ -3,7 +3,7 @@ const ApiError = require("../helpers/ApiError");
 
 const UserRepository = require("../repositories/user.repository");
 const userModel = require("../models/user.model");
-const { Types } = require("mongoose");
+// const { Types } = require("mongoose");
 
 const getUserDetails = async (firebaseUid) => {
   const userInDb = await UserRepository.findOne({ firebaseUid });
@@ -15,9 +15,9 @@ const getUserDetails = async (firebaseUid) => {
   return userInDb;
 };
 
-const updateUserDetails = async (firebaseUid, otherDetails) => {
+const updateUserDetails = async (firebaseUid, ...otherDetails) => {
   const updateUserInDb = await userModel
-    .findOneAndUpdate({ firebaseUid }, otherDetails, {
+    .findOneAndUpdate({ firebaseUid },{ ...otherDetails}, {
       returnOriginal: false,
     })
     .catch((err) => {
