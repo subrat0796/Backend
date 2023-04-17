@@ -25,5 +25,7 @@ router
     [getAuthToken, getFirebaseUid, checkIfAuthenticated],
     registeredEvents
   );
+// post /event/ req.body - details
+// [getAuthToken, getFirebaseUid, checkIfAdmin]
 
 module.exports = router;

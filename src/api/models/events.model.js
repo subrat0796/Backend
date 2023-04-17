@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const EventsSchema = new mongoose.Schema({
   eventName: {
     type: String,
-    required: [true, "User is missing"],
+    required: [true, "Event is missing"],
   },
   dateAndTime: {
     type: Date,
@@ -20,7 +20,11 @@ const EventsSchema = new mongoose.Schema({
   eventType: {
     type: String,
     enum: ["funEvents", "technicalEvents", "workshops", "culturalEvents"],
-    required: [true, , "Event type is missing"],
+    required: [true, "Event type is missing"],
+  },
+  clubName: {
+    type: String,
+    required: [true, "Club name is missing"],
   },
 });
 
