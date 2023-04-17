@@ -1,11 +1,22 @@
 const mongoose = require("mongoose");
 
-const Events = new mongoose.Schema({
-  name: {
+const EventsSchema = new mongoose.Schema({
+  eventName: {
     type: String,
     required: [true, "User is missing"],
   },
-  registrationLink: {
-    // Not sure
+  dateAndTime: {
+    type: Date,
+    required: [true, "Date is missing "],
+  },
+  eventDescription: {
+    type: String,
+    required: [true, "Event description is missing"],
+  },
+  eventDetails: {
+    type: String,
+    required: [true, "Event details link is missing"],
   },
 });
+
+module.exports = mongoose.model("Events", EventsSchema);

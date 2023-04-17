@@ -3,11 +3,13 @@ const mongoose = require("mongoose");
 const EventRegistrationSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
-      required: [true, "User is missing"],
+      type: String,
+      required: [true, "User Id is missing"],
     },
-    //  Rest not sure !
+    eventId: {
+      type: String,
+      required: [true, "Event Id is missing"],
+    },
   },
   {
     timestamps: true,

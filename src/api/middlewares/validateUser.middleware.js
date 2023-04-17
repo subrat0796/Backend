@@ -21,7 +21,7 @@ const getAuthToken = catchAsync(async (req, res, next) => {
 
 const getFirebaseUid = catchAsync(async (req, res, next) => {
   const { authToken } = req;
-  const { uid: firebaseUid } = await admin.auth().verifyIdToken(authToken);
+  const { email: firebaseUid } = await admin.auth().verifyIdToken(authToken);
 
   req.firebaseUid = firebaseUid;
   next();
