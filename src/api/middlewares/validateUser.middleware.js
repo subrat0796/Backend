@@ -1,7 +1,7 @@
 const httpStatus = require("http-status");
-const ApiError = require("../../helpers/ApiError");
-const catchAsync = require("../../helpers/catchAsync");
-const admin = require("../../helpers/firebase");
+const ApiError = require("../helpers/ApiError");
+const catchAsync = require("../helpers/catchAsync");
+const admin = require("../helpers/firebase");
 const userModel = require("../models/user.model");
 
 // 1st call get auth token , then getFirebaseUid then call checkIfAuthenticated

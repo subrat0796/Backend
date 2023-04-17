@@ -5,7 +5,6 @@ const UserSchema = new mongoose.Schema(
     firebaseUid: {
       type: String,
       unique: true,
-      index: true,
     },
     name: {
       type: String,
@@ -24,9 +23,12 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "member"],
       required: true,
       default: "member",
+    },
+    whatsappNumber: {
+      type: String,
+      unique: true,
     },
   },
   {
@@ -36,4 +38,4 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("users", UserSchema);
+module.exports = mongoose.model("Users", UserSchema);
