@@ -17,6 +17,11 @@ const EventsSchema = new mongoose.Schema({
     type: String,
     required: [true, "Event details link is missing"],
   },
+  eventType: {
+    type: String,
+    enum: ["funEvents", "technicalEvents", "workshops", "culturalEvents"],
+    required: [true, , "Event type is missing"],
+  },
 });
 
 module.exports = mongoose.model("Events", EventsSchema);

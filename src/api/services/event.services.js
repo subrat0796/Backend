@@ -27,8 +27,14 @@ const registerEvent = async (firebaseUid, eventId) => {
 };
 
 const registeredEvents = async (firebaseUid) => {
-  const registeredEventsInDb = await eventRegistrationModel.find({
+  let registeredEventsInDb = await eventRegistrationModel.find({
     userId: firebaseUid,
+  });
+
+  registeredEventsInDb = registeredEventsInDb.map(async (event) => {
+    return await eventsModel.find({
+      _id: event.eventId,
+    });
   });
 
   return registeredEventsInDb;
