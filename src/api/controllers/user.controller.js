@@ -19,6 +19,7 @@ const getUserDetails = catchAsync(async (req, res, next) => {
 const updateUserDetails = catchAsync(async (req, res, next) => {
   const { _id } = req;
   const data = req.body;
+  console.log(data)
   const updateUser = await UserService.updateUserDetails(_id, data);
 
   return res.status(httpStatus.OK).json({

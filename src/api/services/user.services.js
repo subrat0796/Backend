@@ -3,13 +3,13 @@ const ApiError = require("../helpers/ApiError");
 
 const UserRepository = require("../repositories/user.repository");
 const userModel = require("../models/user.model");
-const { Types } = require("mongoose");
+const { Types, SchemaTypes } = require("mongoose");
 // const { Types } = require("mongoose");
 
 const getUserDetails = async (userId) => {
   console.log(userId);
   const userInDb = await userModel
-    .find({ _id: Types.ObjectId(userId) })
+    .findOne({ _id: Types.ObjectId(userId) })
     .select({
       password: 0,
     });
@@ -21,11 +21,11 @@ const getUserDetails = async (userId) => {
   return userInDb;
 };
 
-const updateUserDetails = async (userId, ...otherDetails) => {
+const updateUserDetails = async (userId, otherDetails) => {
   const updateUserInDb = await userModel
     .findByIdAndUpdate(
-      userId,
-      { ...otherDetails },
+      Types.ObjectId(userId),
+      otherDetails ,
       {
         returnOriginal: false,
       }
@@ -34,6 +34,8 @@ const updateUserDetails = async (userId, ...otherDetails) => {
     .catch((err) => {
       throw new ApiError(httpStatus.UNAUTHORIZED, err);
     });
+
+  console.log(updateUserInDb)
 
   return updateUserInDb;
 };
