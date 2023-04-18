@@ -26,7 +26,12 @@ const signUpUser = async (email, password) => {
     throw new ApiError(httpStatus.UNAUTHORIZED, "User already exists");
   }
 
-  const createNewUser = await UserRepository.create({ email, password });
+  const createNewUser = await UserRepository.create({
+    email,
+    password,
+    registrationNumber: email,
+    whatsappNumber: email,
+  });
   console.log(createNewUser);
   return createNewUser._id;
 };
