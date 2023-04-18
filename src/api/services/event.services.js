@@ -4,6 +4,7 @@ const ApiError = require("../helpers/ApiError");
 const eventsModel = require("../models/events.model");
 const eventRegistrationModel = require("../models/eventRegistration.model");
 const userModel = require("../models/user.model");
+const { Types } = require("mongoose");
 
 const getAllEvents = async () => {
   const eventsInDb = await eventsModel.find({});
@@ -11,8 +12,8 @@ const getAllEvents = async () => {
   return eventsInDb;
 };
 
-const registerEvent = async (firebaseUid, eventId) => {
-  const userInDb = await userModel.findOne({ firebaseUid });
+const registerEvent = async (userId, eventId) => {
+  const userInDb = await userModel.findById(userId);
 
   if (!userInDb) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "User does not exist");
@@ -20,24 +21,28 @@ const registerEvent = async (firebaseUid, eventId) => {
 
   const eventRegistered = await eventRegistrationModel.create({
     eventId: eventId,
-    userId: firebaseUid,
+    userId: userInDb._id,
   });
 
   return eventRegistered;
 };
 
-const registeredEvents = async (firebaseUid) => {
+const getEventDetails = async (eventId) => {
+  return await eventsModel.find({
+    _id: Types.ObjectId(eventId),
+  });
+};
+
+const registeredEvents = async (userId) => {
   let registeredEventsInDb = await eventRegistrationModel.find({
-    userId: firebaseUid,
+    userId,
   });
 
-  registeredEventsInDb = registeredEventsInDb.map(async (event) => {
-    return await eventsModel.find({
-      _id: event.eventId,
-    });
-  });
+  const userEventsId = registeredEventsInDb.map(({ eventId }) => eventId);
+  const userEvents = eventsModel.find({ _id: { $in: userEventsId } });
+  // await Promise.all(registeredEventsInDb);
 
-  return registeredEventsInDb;
+  return userEvents;
 };
 
 module.exports = {

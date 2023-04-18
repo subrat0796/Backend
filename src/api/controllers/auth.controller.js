@@ -4,8 +4,9 @@ const catchAsync = require("../helpers/catchAsync");
 const AuthService = require("../services/auth.services");
 
 const loginUser = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
-  const loginUsr = await AuthService.loginUser(firebaseUid);
+  const { email, password } = req.body;
+
+  const loginUsr = await AuthService.loginUser(email, password);
 
   return res.status(httpStatus.OK).json({
     code: httpStatus.OK,
@@ -16,11 +17,11 @@ const loginUser = catchAsync(async (req, res, next) => {
 });
 
 const createUser = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
+  const { email, password } = req.body;
 
-  const createUsr = await AuthService.signUpUser(firebaseUid);
+  const createUsr = await AuthService.signUpUser(email, password);
 
-  return res.status(httpStatus.CREATED).json({
+  return res.status(httpStatus.OK).json({
     code: httpStatus.CREATED,
     status: httpStatus[httpStatus.CREATED],
     message: "User created successfully",

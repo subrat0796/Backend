@@ -15,15 +15,12 @@ const getAllEvents = catchAsync(async (req, res, next) => {
 });
 
 const registerEvent = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
+  const { _id } = req;
   const { eventId } = req.params;
 
-  const registerForEvent = await EventService.registerEvent(
-    firebaseUid,
-    eventId
-  );
+  const registerForEvent = await EventService.registerEvent(_id, eventId);
 
-  return res.status(httpStatus.FOUND).json({
+  return res.status(httpStatus.OK).json({
     code: httpStatus.FOUND,
     status: httpStatus[httpStatus.OK],
     message: "Successfully registered for the event",
@@ -32,13 +29,11 @@ const registerEvent = catchAsync(async (req, res, next) => {
 });
 
 const registeredEvents = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
+  const { _id } = req;
 
-  const totalEventsRegistered = await EventService.registeredEvents(
-    firebaseUid
-  );
+  const totalEventsRegistered = await EventService.registeredEvents(_id);
 
-  return res.status(httpStatus.FOUND).json({
+  return res.status(httpStatus.OK).json({
     code: httpStatus.FOUND,
     status: httpStatus[httpStatus.OK],
     message: "Fetched all the registered events",
