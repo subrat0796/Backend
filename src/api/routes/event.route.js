@@ -9,7 +9,6 @@ const {
 
 const {
   getAuthToken,
-  getFirebaseUid,
   checkIfAuthenticated,
 } = require("../middlewares/validateUser.middleware");
 
@@ -17,12 +16,12 @@ router
   .get("/event/getAllEvents", [], getAllEvents)
   .post(
     "/event/registerEvent/:eventId",
-    [getAuthToken, getFirebaseUid, checkIfAuthenticated],
+    [getAuthToken, checkIfAuthenticated],
     registerEvent
   )
   .get(
     "/event/registeredEvents",
-    [getAuthToken, getFirebaseUid, checkIfAuthenticated],
+    [getAuthToken, checkIfAuthenticated],
     registeredEvents
   );
 // post /event/ req.body - details

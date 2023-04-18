@@ -19,47 +19,23 @@ const getAuthToken = catchAsync(async (req, res, next) => {
     );
 });
 
-const getFirebaseUid = catchAsync(async (req, res, next) => {
-  const { authToken } = req;
-  const { email: firebaseUid } = await admin.auth().verifyIdToken(authToken);
-
-  req.firebaseUid = firebaseUid;
-  next();
-});
-
+// Check if the passwords match
 const checkIfAuthenticated = catchAsync(async (req, res, next) => {
   // search using the firebaseUid
-  const { firebaseUid } = req;
-
-  const existingUserInDb = await userModel.findOne({
-    firebaseUid,
-  });
+  // the auth token here is the mongodb id
+  const { authToken } = req;
+  console.log(authToken);
+  const existingUserInDb = await userModel.findById(authToken);
 
   if (!existingUserInDb)
     next(new ApiError(httpStatus.UNAUTHORIZED, "User not authorized"));
 
   req.user = existingUserInDb;
-  next();
-});
-
-const checkIfAdmin = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
-
-  const existingAdminInDb = await userModel.findOne({
-    firebaseUid,
-    role: "admin",
-  });
-
-  if (!existingAdminInDb)
-    next(new ApiError(httpStatus.UNAUTHORIZED, "User not authorized"));
-
-  req.admin = existingAdminInDb;
+  req._id = authToken;
   next();
 });
 
 module.exports = {
   getAuthToken,
-  getFirebaseUid,
   checkIfAuthenticated,
-  checkIfAdmin,
 };

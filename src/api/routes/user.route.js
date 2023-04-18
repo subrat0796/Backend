@@ -11,19 +11,14 @@ const {
 // middlewares
 const {
   getAuthToken,
-  getFirebaseUid,
   checkIfAuthenticated,
 } = require("../middlewares/validateUser.middleware");
 
 router
-  .get(
-    "/user/details",
-    [getAuthToken, getFirebaseUid, checkIfAuthenticated],
-    getUserDetails
-  )
+  .get("/user/details", [getAuthToken, checkIfAuthenticated], getUserDetails)
   .post(
     "/user/updateDetails",
-    [getAuthToken, getFirebaseUid, checkIfAuthenticated],
+    [getAuthToken, checkIfAuthenticated],
     updateUserDetails
   );
 

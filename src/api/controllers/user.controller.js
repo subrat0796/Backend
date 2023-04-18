@@ -4,11 +4,11 @@ const catchAsync = require("../helpers/catchAsync");
 const UserService = require("../services/user.services");
 
 const getUserDetails = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
+  const { _id } = req;
 
-  const userDetails = await UserService.getUserDetails(firebaseUid);
+  const userDetails = await UserService.getUserDetails(_id);
 
-  return res.status(httpStatus.FOUND).json({
+  return res.status(httpStatus.OK).json({
     code: httpStatus.FOUND,
     status: httpStatus[httpStatus.OK],
     message: "Successfully fetched the details of the user",
@@ -17,14 +17,11 @@ const getUserDetails = catchAsync(async (req, res, next) => {
 });
 
 const updateUserDetails = catchAsync(async (req, res, next) => {
-  const { firebaseUid } = req;
+  const { _id } = req;
   const data = req.body;
-  const updateUser = await UserService.updateUserDetails(
-    firebaseUid,
-    data
-  );
+  const updateUser = await UserService.updateUserDetails(_id, data);
 
-  return res.status(httpStatus.FOUND).json({
+  return res.status(httpStatus.OK).json({
     code: httpStatus.FOUND,
     status: httpStatus[httpStatus.OK],
     message: "Successfully updated the details of the user",
